@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "kasirAjaAndroid",
+    "slug": "kasirAjaAndroid",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "kasirAjaAndroid"
+}
