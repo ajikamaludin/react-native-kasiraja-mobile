@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Button,
   Text,
@@ -8,27 +8,82 @@ import {
   HStack,
   Input,
   Link,
+  Alert,
 } from 'native-base'
 import Card from '../../components/Card'
+import { useAuth } from '../../contexts/AppContext'
+import { register } from './Api'
+import { Keyboard } from 'react-native'
+
 export default function RegisterScreen(props) {
   const { navigation } = props
+
+  const { user, isLoggedIn, persistUser } = useAuth()
+
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const [error, setError] = useState(null)
+  const [submit, setSubmit] = useState(false)
+
+  const handleSubmit = () => {
+    Keyboard.dismiss()
+    if (email === '' || password === '' || name === '') {
+      setError({ message: 'nama, email dan password tidak boleh kosong' })
+      return
+    }
+    if(submit) {
+      return
+    }
+    setError(null)
+    setSubmit(true)
+    register({ name, email, password })
+      .then((res) => {
+        // 
+      })
+      .catch((errors) => {
+        setError(errors)
+      })
+      .finally(() => {
+        setSubmit(false)
+      })
+  }
+
+  useEffect(() => {
+    if (isLoggedIn()) {
+      navigation.navigate('Main')
+    }
+    console.log('LoginScreen: ', `user: ${user}`)
+  }, [user])
+
   return (
     <Card safeArea w="90%" mx="auto">
       <Heading size="lg" color="primary.500">
         kasirAja
       </Heading>
       <Heading color="muted.400" size="xs">
-        selamat datang masuk untuk lanjut
+        selamat datang daftar untuk mencoba
       </Heading>
 
       <VStack space={2} mt={5}>
+        {error && (
+          <Alert w="100%" status="warning">
+            <Alert.Icon />
+            <Alert.Description>{error.message}</Alert.Description>
+          </Alert>
+        )}
         <FormControl>
           <FormControl.Label
             _text={{ color: 'muted.700', fontSize: 'sm', fontWeight: 600 }}
           >
             nama toko
           </FormControl.Label>
-          <Input />
+          <Input
+            color="black"
+            value={name}
+            onChangeText={(text) => setName(text)}
+          />
         </FormControl>
         <FormControl>
           <FormControl.Label
@@ -36,7 +91,11 @@ export default function RegisterScreen(props) {
           >
             email
           </FormControl.Label>
-          <Input />
+          <Input
+            color="black"
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+          />
         </FormControl>
         <FormControl mb={5}>
           <FormControl.Label
@@ -44,10 +103,20 @@ export default function RegisterScreen(props) {
           >
             password
           </FormControl.Label>
-          <Input type="password" />
+          <Input
+            type="password"
+            color="black"
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+          />
         </FormControl>
         <VStack space={2}>
-          <Button colorScheme="primary" _text={{ color: 'white' }}>
+          <Button 
+            colorScheme="primary"
+            _text={{ color: 'white' }}
+            onPress={() => handleSubmit()}
+            isLoading={submit}
+          >
             daftar
           </Button>
         </VStack>

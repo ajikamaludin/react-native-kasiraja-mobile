@@ -52,3 +52,5 @@ buck-out/
 # Expo
 .expo/
 web-build/
+
+app.config.js

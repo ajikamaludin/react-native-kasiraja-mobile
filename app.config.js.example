@@ -1,0 +1,7 @@
+export default {
+  name: 'kasirAjaAndroid',
+  version: '1.0.0',
+  extra: {
+    api_url: 'https://localhost:5000',
+  },
+}

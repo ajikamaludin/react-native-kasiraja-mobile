@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Button,
   Text,
@@ -8,11 +8,59 @@ import {
   HStack,
   Input,
   Link,
+  Alert,
 } from 'native-base'
 import Card from '../../components/Card'
+import { login } from './Api'
+import { useAuth } from '../../contexts/AppContext'
+import { Keyboard } from 'react-native'
+
 
 export default function LoginScreen(props) {
   const { navigation } = props
+
+  const { user, isLoggedIn, persistUser } = useAuth()
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const [error, setError] = useState(null)
+  const [submit, setSubmit] = useState(false)
+
+  const handleSubmit = () => {
+    Keyboard.dismiss()
+    if (email === '' || password === '') {
+      setError({message: 'email dan password tidak boleh kosong'})
+      return
+    }
+    if (submit) {
+      return
+    }
+    setError(null)
+    setSubmit(true)
+    login({email, password})
+    .then((res) => {
+      persistUser({
+        ...res.data.user,
+        accessToken: res.data.accessToken,
+        refreshToken: res.data.refreshToken,
+      })
+    })
+    .catch(errors => {
+      setError(errors)
+    })
+    .finally(() => {
+      setSubmit(false)
+    })
+  }
+
+  useEffect(() => {
+    if(isLoggedIn()) {
+      navigation.navigate('Main')
+    }
+    console.log('LoginScreen: ', `user: ${user}`)
+  }, [user])
+
   return (
     <Card safeArea w="90%" mx="auto">
       <Heading size="lg" color="primary.500">
@@ -23,13 +71,25 @@ export default function LoginScreen(props) {
       </Heading>
 
       <VStack space={2} mt={5}>
+        {error && (
+          <Alert w="100%" status="warning">
+            <Alert.Icon />
+            <Alert.Description>
+              {error.message}
+            </Alert.Description>
+          </Alert>
+        )}
         <FormControl>
           <FormControl.Label
             _text={{ color: 'muted.700', fontSize: 'sm', fontWeight: 600 }}
           >
             email
           </FormControl.Label>
-          <Input />
+          <Input
+            color="black"
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+          />
         </FormControl>
         <FormControl mb={5}>
           <FormControl.Label
@@ -37,21 +97,33 @@ export default function LoginScreen(props) {
           >
             password
           </FormControl.Label>
-          <Input type="password" />
+          <Input
+            color="black"
+            type="password"
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+          />
         </FormControl>
         <VStack space={2}>
-          <Button colorScheme="primary" _text={{ color: 'white' }} onPress={() => navigation.navigate('Main')}>
+          <Button
+            colorScheme="primary"
+            _text={{ color: 'white' }}
+            onPress={() => handleSubmit()}
+            isLoading={submit}
+          >
             login
           </Button>
         </VStack>
         <HStack justifyContent="center" mt={5}>
           <Text fontSize="sm" color="muted.700" fontWeight={400}>
-            ingin mencoba, {' '}
+            ingin mencoba,{' '}
           </Text>
           <Link
             variant="link"
             _text={{ color: 'primary.500', bold: true, fontSize: 'sm' }}
-            onPress={() => { navigation.navigate('Register') }}
+            onPress={() => {
+              navigation.navigate('Register')
+            }}
           >
             daftar ?
           </Link>

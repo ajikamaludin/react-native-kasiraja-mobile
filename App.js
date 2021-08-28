@@ -1,7 +1,9 @@
-import React from 'react';
-import { NativeBaseProvider, extendTheme } from 'native-base'
+import React, { Suspense } from 'react';
+import { NativeBaseProvider, extendTheme, Text } from 'native-base'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+
+import { AppProvider } from './src/contexts/AppContext'
 
 import LoginScreen from './src/screens/auth/LoginScreen';
 import RegisterScreen from './src/screens/auth/RegisterScreen';
@@ -26,10 +28,6 @@ export default function App() {
         800: '#822727',
         900: '#63171B',
       },
-      // Redefinig only one shade, rest of the color will remain same.
-      amber: {
-        400: '#d97706',
-      },
     },
     config: {
       // Changing initialColorMode to 'dark'
@@ -37,17 +35,21 @@ export default function App() {
     },
   })
   return (
-    <NativeBaseProvider theme={theme}>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="Login"
-          screenOptions={{ headerShown: false }}
-        >
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Register" component={RegisterScreen} />
-          <Stack.Screen name="Main" component={MainScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </NativeBaseProvider>
+    <AppProvider>
+      <NativeBaseProvider theme={theme}>
+        <Suspense fallback={<Text>loading...</Text>}>
+          <NavigationContainer>
+            <Stack.Navigator
+              initialRouteName="Main"
+              screenOptions={{ headerShown: false }}
+            >
+              <Stack.Screen name="Login" component={LoginScreen} />
+              <Stack.Screen name="Register" component={RegisterScreen} />
+              <Stack.Screen name="Main" component={MainScreen} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </Suspense>
+      </NativeBaseProvider>
+    </AppProvider>
   )
 }
