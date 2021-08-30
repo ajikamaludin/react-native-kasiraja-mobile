@@ -1,13 +1,14 @@
-import React, { Suspense } from 'react';
+import React, { Suspense } from 'react'
 import { NativeBaseProvider, extendTheme, Text } from 'native-base'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-
+import { Spinner } from './src/components'
 import { AppProvider } from './src/contexts/AppContext'
 
-import LoginScreen from './src/screens/auth/LoginScreen';
-import RegisterScreen from './src/screens/auth/RegisterScreen';
-import MainScreen from './src/screens/MainScreen';
+import LoadingScreen from './src/screens/Splash/LoadingScreen'
+import LoginScreen from './src/screens/auth/LoginScreen'
+import RegisterScreen from './src/screens/auth/RegisterScreen'
+import MainScreen from './src/screens/MainScreen'
 
 // here is context and native base provider
 // navigation login , register , main screen
@@ -30,14 +31,13 @@ export default function App() {
       },
     },
     config: {
-      // Changing initialColorMode to 'dark'
       initialColorMode: 'dark',
     },
   })
   return (
-    <AppProvider>
-      <NativeBaseProvider theme={theme}>
-        <Suspense fallback={<Text>loading...</Text>}>
+    <Suspense fallback={<Spinner/>}>
+      <AppProvider>
+        <NativeBaseProvider theme={theme}>
           <NavigationContainer>
             <Stack.Navigator
               initialRouteName="Main"
@@ -48,8 +48,8 @@ export default function App() {
               <Stack.Screen name="Main" component={MainScreen} />
             </Stack.Navigator>
           </NavigationContainer>
-        </Suspense>
-      </NativeBaseProvider>
-    </AppProvider>
+        </NativeBaseProvider>
+      </AppProvider>
+    </Suspense>
   )
 }

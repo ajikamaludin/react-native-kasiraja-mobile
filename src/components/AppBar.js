@@ -6,18 +6,21 @@ import {
   Text,
   Box,
   StatusBar,
+  View,
 } from 'native-base'
 import { MaterialIcons } from '@expo/vector-icons'
+import { useAuth } from '../contexts/AppContext'
+import { Dimensions } from 'react-native'
 
-export default function AppBar() {
+export default function AppBar(props) {
+  const { drawer, navigation, options } = props
+
   return (
-    <>
-      <StatusBar backgroundColor="#3700B3" barStyle="light-content" />
-
-      <Box safeAreaTop backgroundColor="#6200ee" />
-
+    <View>
+      <StatusBar />
+      <Box backgroundColor="primary.500" />
       <HStack
-        bg="#6200ee"
+        bg="primary.500"
         px={1}
         py={3}
         justifyContent="space-between"
@@ -32,30 +35,13 @@ export default function AppBar() {
                 color="white"
               />
             }
+            onPress={() => drawer.current.openDrawer()}
           />
           <Text color="white" fontSize={20} fontWeight="bold">
-            Home
+            {options?.title}
           </Text>
         </HStack>
         <HStack space={2}>
-          <IconButton
-            icon={
-              <Icon
-                as={<MaterialIcons name="favorite" />}
-                size="sm"
-                color="white"
-              />
-            }
-          />
-          <IconButton
-            icon={
-              <Icon
-                as={<MaterialIcons name="search" />}
-                color="white"
-                size="sm"
-              />
-            }
-          />
           <IconButton
             icon={
               <Icon
@@ -67,6 +53,6 @@ export default function AppBar() {
           />
         </HStack>
       </HStack>
-    </>
+    </View>
   )
 }

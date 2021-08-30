@@ -14,7 +14,7 @@ import Card from '../../components/Card'
 import { login } from './Api'
 import { useAuth } from '../../contexts/AppContext'
 import { Keyboard } from 'react-native'
-
+import { Spinner } from '../../components'
 
 export default function LoginScreen(props) {
   const { navigation } = props
@@ -58,8 +58,11 @@ export default function LoginScreen(props) {
     if(isLoggedIn()) {
       navigation.navigate('Main')
     }
-    console.log('LoginScreen: ', `user: ${user}`)
   }, [user])
+
+  if (isLoggedIn()) {
+    return <Spinner />
+  }
 
   return (
     <Card safeArea w="90%" mx="auto">
