@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "kasirAjaAndroid",
-    "slug": "kasirAjaAndroid",
+    "name": "kasirAja POS",
+    "slug": "kasirAja POS",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
     ]
   },
-  "name": "kasirAjaAndroid"
+  "name": "kasirAja POS"
 }

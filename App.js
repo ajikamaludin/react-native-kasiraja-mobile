@@ -1,20 +1,22 @@
-import React, { Suspense } from 'react'
-import { NativeBaseProvider, extendTheme, Text } from 'native-base'
-import { NavigationContainer } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { Spinner } from './src/components'
-import { AppProvider } from './src/contexts/AppContext'
+import React, { useRef } from 'react'
 
-import LoadingScreen from './src/screens/Splash/LoadingScreen'
-import LoginScreen from './src/screens/auth/LoginScreen'
-import RegisterScreen from './src/screens/auth/RegisterScreen'
+// eslint-disable-next-line
+import { extendTheme, NativeBaseProvider } from 'native-base'
+
+import { AppProvider } from './src/contexts/AppContext'
+import { createNavigationContainerRef } from '@react-navigation/native'
+
+import { DrawerLayoutAndroid } from 'react-native'
+
+import DrawerLayout from './src/components/DrawerLayout'
 import MainScreen from './src/screens/MainScreen'
 
-// here is context and native base provider
-// navigation login , register , main screen
-const Stack = createNativeStackNavigator()
-
 export default function App() {
+
+  const drawer = useRef(null)
+
+  const navigationRef = createNavigationContainerRef()
+
   const theme = extendTheme({
     colors: {
       primary: {
@@ -31,25 +33,28 @@ export default function App() {
       },
     },
     config: {
-      initialColorMode: 'dark',
+      initialColorMode: 'light',
     },
   })
+
   return (
-    <Suspense fallback={<Spinner/>}>
-      <AppProvider>
-        <NativeBaseProvider theme={theme}>
-          <NavigationContainer>
-            <Stack.Navigator
-              initialRouteName="Main"
-              screenOptions={{ headerShown: false }}
-            >
-              <Stack.Screen name="Login" component={LoginScreen} />
-              <Stack.Screen name="Register" component={RegisterScreen} />
-              <Stack.Screen name="Main" component={MainScreen} />
-            </Stack.Navigator>
-          </NavigationContainer>
-        </NativeBaseProvider>
-      </AppProvider>
-    </Suspense>
+    <AppProvider>
+      <NativeBaseProvider theme={theme}>
+        <DrawerLayoutAndroid
+          ref={drawer}
+          drawerWidth={300}
+          drawerPosition={'left'}
+          renderNavigationView={(props) => (
+            <DrawerLayout
+              {...props}
+              navigation={navigationRef}
+              drawer={drawer}
+            />
+          )}
+        >
+          <MainScreen navigationRef={navigationRef} drawer={drawer}/>
+          </DrawerLayoutAndroid>
+      </NativeBaseProvider>
+    </AppProvider>
   )
 }

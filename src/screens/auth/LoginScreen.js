@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   Button,
   Text,
@@ -14,12 +14,11 @@ import Card from '../../components/Card'
 import { login } from './Api'
 import { useAuth } from '../../contexts/AppContext'
 import { Keyboard } from 'react-native'
-import { Spinner } from '../../components'
 
 export default function LoginScreen(props) {
   const { navigation } = props
 
-  const { user, isLoggedIn, persistUser } = useAuth()
+  const { persistUser } = useAuth()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -40,10 +39,11 @@ export default function LoginScreen(props) {
     setSubmit(true)
     login({email, password})
     .then((res) => {
+      const { data } = res
       persistUser({
-        ...res.data.user,
-        accessToken: res.data.accessToken,
-        refreshToken: res.data.refreshToken,
+        ...data.user,
+        accessToken: data.accessToken,
+        refreshToken: data.refreshToken,
       })
     })
     .catch(errors => {
@@ -52,16 +52,6 @@ export default function LoginScreen(props) {
     .finally(() => {
       setSubmit(false)
     })
-  }
-
-  useEffect(() => {
-    if(isLoggedIn()) {
-      navigation.navigate('Main')
-    }
-  }, [user])
-
-  if (isLoggedIn()) {
-    return <Spinner />
   }
 
   return (
@@ -76,10 +66,10 @@ export default function LoginScreen(props) {
       <VStack space={2} mt={5}>
         {error && (
           <Alert w="100%" status="warning">
-            <Alert.Icon />
-            <Alert.Description>
-              {error.message}
-            </Alert.Description>
+            <HStack space={2} flexShrink={1} alignItems="center">
+              <Alert.Icon />
+              <Text>{error?.message}</Text>
+            </HStack>
           </Alert>
         )}
         <FormControl>

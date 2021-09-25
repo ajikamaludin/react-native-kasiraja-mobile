@@ -1,10 +1,11 @@
-import { ScrollView, VStack, Box, Text, Divider, Pressable,HStack, Icon, Badge } from 'native-base'
+import { ScrollView, VStack, Box, Text, Divider, Pressable,HStack, Badge } from 'native-base'
 import React from 'react'
 import { FontAwesome5 } from '@expo/vector-icons'
 import { useAuth } from '../contexts/AppContext'
 
 export default function DrawerLayout(props) {
-  const { drawer, navigation, user } = props
+  const { drawer, navigation } = props
+  const { user } = useAuth()
 
   const menus = [
     {
@@ -55,20 +56,20 @@ export default function DrawerLayout(props) {
           }}>
           <Box px={4} my={6}>
             <Text bold color="gray.700">
-              {user.name}
+              {user?.name}
             </Text>
             <HStack>
               <Text fontSize={14} mt={1} color="gray.500" fontWeight={500}>
-                {user.email}
+                {user?.email}
               </Text>
               <Badge mx="1" my="1">
-                {user.role}
+                {user?.role}
               </Badge>
             </HStack>
-            <Text color="gray.700">{user.company_name}</Text>
+            <Text color="gray.700">{user?.company_name}</Text>
           </Box>
         </Pressable>
-        <Divider />
+        <Divider width="100%"/>
         <VStack space={1}>
           {menus.map((menu, index) => (
             <Pressable

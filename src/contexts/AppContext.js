@@ -47,12 +47,16 @@ const AppContext = React.createContext()
 function AppProvider(props) {
   const [user, setUser] = useState(null)
 
+  const [cart, setCart] = useState({ items: [] })
+
   const value = useMemo(
     () => ({
       user,
       setUser,
+      cart,
+      setCart
     }),
-    [user, setUser]
+    [user, setUser, cart, setCart]
   )
 
   const getUser = async () => {
@@ -60,45 +64,44 @@ function AppProvider(props) {
     setUser(savedUser)
   }
 
+  const axiosIntercept = async () => {
+      await axios.interceptors.response.use(
+        (res) => res,
+        async (error) => {
+          const {
+            status,
+            data: { message },
+          } = error.response
+          if (status === 401 && message === 'Unauthenticated.') {
+            setUser(null)
+            return
+          }
+
+          if (status === 401 && message === 'Token maximum age exceeded') {
+            const originalRequest = error.config
+            originalRequest._retry = true
+            const user = await userManager.get()
+
+            const { refreshToken } = user
+            const res = await refreshAccessToken(refreshToken)
+            const newUser = { ...user, accessToken: res.data.accessToken }
+
+            setUser(newUser)
+            userManager.set(JSON.stringify(newUser))
+            axios.defaults.headers.common[
+              'Authorization'
+            ] = `Bearer ${res.data.accessToken}`
+            return axioInstance(originalRequest)
+          }
+
+          throw error
+        }
+      )
+      await getUser()
+  }
+
   useEffect(() => {
-    axios.interceptors.response.use(
-      (res) => res,
-      async (error) => {
-        const {
-          status,
-          data: { message },
-        } = error.response
-        if (status === 401 && message === 'Unauthenticated.') {
-          window.localStorage.clear()
-          window.location.reload()
-          return
-        }
-
-        if (status === 401 && message === 'Token maximum age exceeded') {
-          const originalRequest = error.config
-          originalRequest._retry = true
-
-          const { refreshToken } = user
-          const res = await refreshAccessToken(refreshToken)
-          const newUser = { ...user, accessToken: res.data.accessToken }
-
-          setUser(newUser)
-          userManager.set(JSON.stringify(newUser))
-
-          axios.defaults.headers.common[
-            'Authorization'
-          ] = `Bearer ${res.data.accessToken}`
-          return axioInstance(originalRequest)
-        }
-
-        if (status === 403) {
-          window.alert('Anda tidak mempunyai akses untuk aksi ini')
-        }
-
-        throw error
-      }
-    )
-    getUser()
+    axiosIntercept()
   }, [])
 
   return (
@@ -106,12 +109,26 @@ function AppProvider(props) {
   )
 }
 
+function useCart() {
+  const appContext = useContext(AppContext)
+  if (!appContext) {
+    throw Error('useAuth must be used within AppProvider')
+  }
+
+  const { cart, setCart } = appContext
+
+  return { 
+    cart, 
+    setCart 
+  }
+}
+
 function useAuth() {
   const appContext = useContext(AppContext)
   if (!appContext) {
     throw Error('useAuth must be used within AppProvider')
   }
-  const { user, setUser } = appContext
+  const { user, setUser, setCart } = appContext
 
   const isLoggedIn = () => {
     return is.not.empty(user) && is.not.null(user)
@@ -126,6 +143,7 @@ function useAuth() {
     logoutApi(user.refreshToken)
     userManager.remove()
     setUser(null)
+    setCart({items: []})
   }
 
   return {
@@ -136,4 +154,4 @@ function useAuth() {
   }
 }
 
-export { AppProvider, useAuth }
+export { AppProvider, useAuth, useCart }

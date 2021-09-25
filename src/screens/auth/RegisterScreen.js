@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
   Button,
   Text,
@@ -12,15 +12,12 @@ import {
   View,
 } from 'native-base'
 import Card from '../../components/Card'
-import { useAuth } from '../../contexts/AppContext'
 import { register } from './Api'
 import { Keyboard } from 'react-native'
 import SnackBar from 'react-native-snackbar-component'
 
 export default function RegisterScreen(props) {
   const { navigation } = props
-
-  const { user, isLoggedIn, persistUser } = useAuth()
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -53,12 +50,6 @@ export default function RegisterScreen(props) {
       })
   }
 
-  useEffect(() => {
-    if (isLoggedIn()) {
-      navigation.navigate('Main')
-    }
-  }, [user])
-
   return (
     <View safeArea flex={1}>
       <Card w="90%" mx="auto">
@@ -72,8 +63,10 @@ export default function RegisterScreen(props) {
         <VStack space={2} mt={5}>
           {error && (
             <Alert w="100%" status="warning">
-              <Alert.Icon />
-              <Alert.Description>{error.message}</Alert.Description>
+              <HStack space={2} flexShrink={1} alignItems="center">
+                <Alert.Icon />
+                <Text>{error?.message}</Text>
+              </HStack>
             </Alert>
           )}
           <FormControl>

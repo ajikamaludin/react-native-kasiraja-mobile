@@ -13,7 +13,7 @@ import { useAuth } from '../contexts/AppContext'
 import { Dimensions } from 'react-native'
 
 export default function AppBar(props) {
-  const { drawer, navigation, options } = props
+  const { drawer, options, menus = [] } = props
 
   return (
     <View>
@@ -25,6 +25,7 @@ export default function AppBar(props) {
         py={3}
         justifyContent="space-between"
         alignItems="center"
+        h={12}
       >
         <HStack space={4} alignItems="center">
           <IconButton
@@ -41,17 +42,19 @@ export default function AppBar(props) {
             {options?.title}
           </Text>
         </HStack>
-        <HStack space={2}>
-          <IconButton
-            icon={
-              <Icon
-                as={<MaterialIcons name="more-vert" />}
-                size="sm"
-                color="white"
-              />
-            }
-          />
-        </HStack>
+        {menus.length > 0 && (
+          <HStack space={2}>
+            <IconButton
+              icon={
+                <Icon
+                  as={<MaterialIcons name="more-vert" />}
+                  size="sm"
+                  color="white"
+                />
+              }
+            />
+          </HStack>
+        )}
       </HStack>
     </View>
   )

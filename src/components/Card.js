@@ -1,17 +1,5 @@
 import React from 'react'
-import {
-  VStack,
-  HStack,
-  Avatar,
-  Image,
-  Text,
-  NativeBaseProvider,
-  AspectRatio,
-  Center,
-  Box,
-  Stack,
-  Heading,
-} from 'native-base'
+import { Center, Box } from 'native-base'
 
 export default function Card({ children, ...restsProps }) {
   return (
