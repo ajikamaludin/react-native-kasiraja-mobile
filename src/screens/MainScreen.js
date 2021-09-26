@@ -89,7 +89,7 @@ export default function MainScreen({ navigationRef, drawer }) {
           <Stack.Screen
             name="CreateDetailScreen"
             component={CreateDetailScreen}
-            options={{ title: 'kasriAja' }}
+            options={{ title: 'Detail Order' }}
           />
         </Stack.Navigator>
       )}

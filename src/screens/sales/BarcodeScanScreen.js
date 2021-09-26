@@ -119,7 +119,7 @@ export default function BarcodeScanScreen({ navigation }) {
           />
         }
         h={10}
-        onPress={() => setCart({ ...cart, items: [] })}
+        onPress={() => navigation.navigate('CreateDetailScreen')}
         label={`${totalQuantity} barang`}
       />
     </View>

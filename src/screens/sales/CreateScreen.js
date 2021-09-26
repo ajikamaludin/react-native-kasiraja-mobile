@@ -9,7 +9,7 @@ import {
   Spinner,
   Icon,
 } from 'native-base'
-import { ToastAndroid, BackHandler, Alert } from 'react-native'
+import { ToastAndroid } from 'react-native'
 import { AntDesign, MaterialCommunityIcons, Entypo } from '@expo/vector-icons' 
 import { useAuth, useCart } from '../../contexts/AppContext'
 import { getProducts } from '../products/Api'
@@ -21,7 +21,7 @@ import FabButton from '../../components/FabButton'
 
 export default function CreateSale(props) {
   const { navigation } = props
-  const { user, isLoggedIn } = useAuth()
+  const { user } = useAuth()
   const { cart, setCart } = useCart()
 
   const [search, setSearch] = useState('')
@@ -75,6 +75,7 @@ export default function CreateSale(props) {
         }
       })
       .catch(err => {
+        console.log(err?.response)
         ToastAndroid.show(err?.message, ToastAndroid.SHORT)
       })
   }
@@ -98,6 +99,7 @@ export default function CreateSale(props) {
 
   useEffect(() => {
     refresh()
+    return () => {}
   }, [q])
 
   return (
