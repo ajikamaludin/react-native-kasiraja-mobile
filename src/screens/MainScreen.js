@@ -3,8 +3,12 @@ import React from 'react'
 import { AppBar } from '../components'
 import LoginScreen from './auth/LoginScreen'
 import RegisterScreen from './auth/RegisterScreen'
+
 import CreateSaleScreen from './sales/CreateScreen'
 import BarcodeScanScreen from './sales/BarcodeScanScreen'
+import CreatePayScreen from './sales/CreatePayScreen'
+import SelectionCustomerScreen from './sales/SelectionCustomerScreen'
+
 import CreateDetailScreen from './sales/CreateDetailScreen'
 import ProfileScreen from './profile/ProfileScreen'
 import ListCategoryScreen from './categories/ListScreen'
@@ -89,7 +93,17 @@ export default function MainScreen({ navigationRef, drawer }) {
           <Stack.Screen
             name="CreateDetailScreen"
             component={CreateDetailScreen}
-            options={{ title: 'Detail Order' }}
+            options={{ title: 'detail order' }}
+          />
+          <Stack.Screen
+            name="CreatePayScreen"
+            component={CreatePayScreen}
+            options={{ title: 'pembayaran' }}
+          />
+          <Stack.Screen
+            name="SelectionCustomerScreen"
+            component={SelectionCustomerScreen}
+            options={{ title: 'pelanggan' }}
           />
         </Stack.Navigator>
       )}

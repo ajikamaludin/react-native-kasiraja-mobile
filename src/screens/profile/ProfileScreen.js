@@ -19,7 +19,7 @@ export default function ProfileScreen(props) {
                 .toUpperCase()}
             </Avatar>
             <VStack>
-              <Text color="black">{user?.name}</Text>
+              <Text color="black" fontWeight="bold">{user?.name}</Text>
               <Text color="black">{user?.email}</Text>
             </VStack>
           </HStack>
@@ -41,7 +41,6 @@ export default function ProfileScreen(props) {
       <Modal
         isOpen={modalVisible}
         onClose={() => setModalVisible(false)}
-        // size="sm"
       >
         <Modal.Content>
           <Modal.Header>

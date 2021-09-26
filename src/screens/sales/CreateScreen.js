@@ -34,7 +34,11 @@ export default function CreateSale(props) {
   const [isRefresh, setIsRefresh] = useState(false)
   const [isLoadMore, setIsLoadMore] = useState(false)
 
-  const addItem = (item) => {
+  const addItem = async (item) => {
+    if(+item.stock <= 0) {
+      ToastAndroid.show("stok barang tidak tersedia", ToastAndroid.SHORT);
+      return 
+    }
     const exists = cart.items.find(cartItem => cartItem.id === item.id)
     if(exists) {
       setCart({
@@ -43,7 +47,7 @@ export default function CreateSale(props) {
           if(cartItem.id === item.id) {
             return {
               ...cartItem,
-              quantity: cartItem.quantity + 1
+              quantity: +item.stock >= cartItem.quantity + 1 ? cartItem.quantity + 1 : +item.stock
             }
           }
           return cartItem
@@ -60,7 +64,7 @@ export default function CreateSale(props) {
   const totalQuantity = cart.items.reduce((amt, item) => amt + item.quantity, 0)
 
   const fetch = async (params, refresh = false) => {
-    await getProducts(user.accessToken, params)
+    await getProducts(user.accessToken, {...params, withStock: true})
       .then((res) => {
         if (+res.meta.total === items.length) {
           setIsCanLoadMore(false)
@@ -75,7 +79,6 @@ export default function CreateSale(props) {
         }
       })
       .catch(err => {
-        console.log(err?.response)
         ToastAndroid.show(err?.message, ToastAndroid.SHORT)
       })
   }
@@ -117,7 +120,7 @@ export default function CreateSale(props) {
             }
             InputRightElement={
               <Icon
-                as={<Entypo name="circle-with-cross" size={24} color="black" />}
+                as={<Entypo name="circle-with-cross"/>}
                 size={5}
                 mr="2"
                 color="muted.400"
@@ -138,6 +141,7 @@ export default function CreateSale(props) {
           />
         </HStack>
         <FlatList
+          minHeight="64"
           data={items}
           renderItem={({ item }) => (
             <ItemProduct item={item} onPress={() => addItem(item)} />
@@ -153,18 +157,20 @@ export default function CreateSale(props) {
         />
         {isLoadMore && <Spinner />}
       </VStack>
-      <FabButton
-        icon={
-          <Icon
-            color="white"
-            as={<AntDesign name="shoppingcart" />}
-            size="sm"
-          />
-        }
-        h={10}
-        onPress={() => navigation.navigate('CreateDetailScreen')}
-        label={`${totalQuantity} barang`}
-      />
+      {totalQuantity > 0 && (
+        <FabButton
+          icon={
+            <Icon
+              color="white"
+              as={<AntDesign name="shoppingcart" />}
+              size="sm"
+            />
+          }
+          h={10}
+          onPress={() => navigation.navigate('CreateDetailScreen')}
+          label={`${totalQuantity} barang`}
+        />
+      )}
       {/* <SnackBar
         height={'5px'}
         visible={true}

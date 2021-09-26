@@ -2,10 +2,23 @@
   "expo": {
     "name": "kasirAja POS",
     "slug": "kasirAja POS",
+    "orientation": "potrait",
+    "icon": "./assets/icons/logo512.png",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "splash": {
+      "image": "./assets/icons/logo512.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "android": {
+      "adaptiveIcon" : {
+        "foregroundImage": "./assets/icons/logo512.png",
+        "backgroundColor": "#ffffff"
+      }
+    }
   },
   "name": "kasirAja POS"
 }

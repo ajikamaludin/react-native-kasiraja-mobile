@@ -1,16 +1,197 @@
-import React from 'react'
-import { View, Text } from 'native-base'
+import React, { useEffect, useState } from 'react'
+import { View, Text, VStack, HStack, Badge, Divider, Center, Button, Icon, Box, ScrollView } from 'native-base'
+import { MaterialIcons, Entypo } from '@expo/vector-icons' 
 
-export default function CreateDetailScreen() {
-  // TODO:
-  // pilih customer disini
-  // set qty item disinni
-  // remove item disini
-  // remove all disini
+import { useCart } from '../../contexts/AppContext'
+import { TouchableOpacity } from 'react-native'
+import { formatIDR } from '../../utils'
+
+import ModalDiscount from './ModalDiscount'
+import ModalItem from './ModalItem'
+import ModalDelete from './ModalDelete'
+
+export default function CreateDetailScreen({navigation}) {
+  const { cart, setCart } = useCart()
+  
+  const [discount, setDiscount] = useState(0)
+  const [modalDiscount, setModalDiscount] = useState(false)
+
+  const [modalItem, setModalItem] = useState(false)
+  const [selected, setSelected] = useState(null)
+
+  const [modalDelete, setModalDelete] = useState(false)
+  
+  const handleRemoveCustomer = () => {
+    setCart({
+      ...cart,
+      customer: null
+    })
+  }
+
+  const handleChangeItem = (newItem) => {
+    setCart({
+      ...cart,
+      items: cart.items.map((item) => {
+        if(item.id === newItem.id) {
+          return newItem
+        } else {
+          return item
+        }
+      })
+    })
+  }
+
+  const handleRemoveItem = (item) => {
+    setCart({
+      ...cart,
+      items: cart.items.filter((fitem) => fitem.id !== item.id)
+    })
+  }
+
+  const handleDiscountChange = (discount) => {
+    setDiscount(+discount)
+    setCart({
+      ...cart,
+      discount: +discount,
+    })
+  }
+
+  const handlDeleteOrder = () => {
+    setCart({ ...cart, items: [] })
+  }
+
+  const totalOrder = cart.items.reduce((amt, item) => +amt + +item.price * +item.quantity, 0)
+  const totalOrderAfterDiscount = totalOrder - discount
+
+  useEffect(() => {
+    if(cart.items.length <= 0) {
+      navigation.goBack()
+    }
+  }, [cart])
 
   return (
     <View flex={1} backgroundColor="white">
-      <Text>Detail</Text>
+      <ScrollView>
+        <VStack>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('SelectionCustomerScreen')}
+          >
+            <HStack justifyContent="space-between" p={4}>
+              <Text fontWeight="bold">
+                {cart?.customer === null
+                  ? 'Pelanggan'
+                  : cart?.customer?.name}
+              </Text>
+              {cart?.customer === null ? (
+                <Icon
+                  size="sm"
+                  color="muted.500"
+                  as={<MaterialIcons name="arrow-forward-ios" />}
+                />
+              ) : (
+                <TouchableOpacity>
+                  <Icon
+                    size="sm"
+                    color="muted.500"
+                    as={<Entypo name="circle-with-cross" />}
+                    onPress={handleRemoveCustomer}
+                  />
+                </TouchableOpacity>
+              )}
+            </HStack>
+          </TouchableOpacity>
+          <Divider borderColor="muted.300" w="100%" mb={1} />
+          {cart.items.map((item) => (
+            <TouchableOpacity
+              key={item.id}
+              onPress={() => {
+                setSelected(item)
+                setModalItem(true)
+              }}
+            >
+              <HStack justifyContent="space-between" px={4} py={2}>
+                <HStack>
+                  <Badge>{item.quantity}</Badge>
+                  <Text fontWeight="bold" ml={2}>
+                    {item.name}
+                  </Text>
+                </HStack>
+                <Text>{formatIDR(+item.quantity * +item.price)}</Text>
+              </HStack>
+            </TouchableOpacity>
+          ))}
+
+          <Divider borderColor="muted.300" w="100%" my={1} />
+          <VStack py={1} px={6}>
+            <HStack justifyContent="space-between" p={4}>
+              <Text fontWeight="bold">Subtotal</Text>
+              <Text fontWeight="bold">{formatIDR(totalOrder)}</Text>
+            </HStack>
+            <Divider borderColor="muted.300" w="100%" />
+            <TouchableOpacity onPress={() => setModalDiscount(true)}>
+              <HStack justifyContent="space-between" p={4}>
+                <Text fontWeight="bold">Diskon</Text>
+                {discount <= 0 ? (
+                  <Icon
+                    size="sm"
+                    color="muted.500"
+                    as={<MaterialIcons name="arrow-forward-ios" />}
+                  />
+                ) : (
+                  <Text fontWeight="bold">{formatIDR(discount)}</Text>
+                )}
+              </HStack>
+            </TouchableOpacity>
+            <Divider borderColor="muted.300" w="100%" />
+          </VStack>
+
+          <Center mt="5" mb="32">
+            <Button onPress={() => setModalDelete(true)}>Hapus Pesanan</Button>
+          </Center>
+        </VStack>
+      </ScrollView>
+      <Box
+        position="absolute"
+        bottom="0"
+        right="0"
+        bgColor="white"
+        p={4}
+        width="100%"
+        shadow={6}
+      >
+        <VStack space="md">
+          <HStack justifyContent="space-between">
+            <Text fontWeight="bold">Total</Text>
+            <Text fontWeight="bold">{formatIDR(totalOrderAfterDiscount)}</Text>
+          </HStack>
+          <Button
+            onPress={() => {
+              navigation.navigate('CreatePayScreen')
+            }}
+          >
+            Bayar
+          </Button>
+        </VStack>
+      </Box>
+      <ModalDiscount
+        isOpen={modalDiscount}
+        setOpen={setModalDiscount}
+        discount={discount}
+        setDiscount={handleDiscountChange}
+      />
+      <ModalItem
+        isOpen={modalItem}
+        setOpen={setModalItem}
+        item={selected}
+        setItem={handleChangeItem}
+        removeItem={handleRemoveItem}
+        setSelected={setSelected}
+      />
+      <ModalDelete
+        isOpen={modalDelete}
+        setOpen={setModalDelete}
+        handleDelete={handlDeleteOrder}
+      />
     </View>
   )
 }

@@ -47,7 +47,7 @@ const AppContext = React.createContext()
 function AppProvider(props) {
   const [user, setUser] = useState(null)
 
-  const [cart, setCart] = useState({ items: [] })
+  const [cart, setCart] = useState({ items: [], customer: null })
 
   const value = useMemo(
     () => ({
