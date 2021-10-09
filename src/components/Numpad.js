@@ -4,7 +4,7 @@ import { Feather } from '@expo/vector-icons'
 
 export default function Numpad() {
   return (
-    <Box position="absolute" bottom="0" left="0" right="0">
+    <Box mt={'48'}>
       <HStack justifyContent="space-between">
         <VStack>
           <Button
@@ -12,7 +12,7 @@ export default function Numpad() {
             py={5}
             rounded="0"
             bgColor="white"
-            _text={{ color: 'black', fontWeight: "bold" }}
+            _text={{ color: 'black', fontWeight: 'bold' }}
             borderWidth="1"
             borderColor="muted.100"
             _pressed={{ bgColor: 'muted.100' }}
@@ -24,7 +24,7 @@ export default function Numpad() {
             py={5}
             rounded="0"
             bgColor="white"
-            _text={{ color: 'black', fontWeight: "bold" }}
+            _text={{ color: 'black', fontWeight: 'bold' }}
             borderWidth="1"
             borderColor="muted.100"
             _pressed={{ bgColor: 'muted.100' }}
@@ -36,7 +36,7 @@ export default function Numpad() {
             py={5}
             rounded="0"
             bgColor="white"
-            _text={{ color: 'black', fontWeight: "bold" }}
+            _text={{ color: 'black', fontWeight: 'bold' }}
             borderWidth="1"
             borderColor="muted.100"
             _pressed={{ bgColor: 'muted.100' }}
@@ -48,7 +48,7 @@ export default function Numpad() {
             py={5}
             rounded="0"
             bgColor="white"
-            _text={{ color: 'black', fontWeight: "bold" }}
+            _text={{ color: 'black', fontWeight: 'bold' }}
             borderWidth="1"
             borderColor="muted.100"
             _pressed={{ bgColor: 'muted.100' }}
@@ -62,7 +62,7 @@ export default function Numpad() {
             py={5}
             rounded="0"
             bgColor="white"
-            _text={{ color: 'black', fontWeight: "bold" }}
+            _text={{ color: 'black', fontWeight: 'bold' }}
             borderWidth="1"
             borderColor="muted.100"
             _pressed={{ bgColor: 'muted.100' }}
@@ -74,7 +74,7 @@ export default function Numpad() {
             py={5}
             rounded="0"
             bgColor="white"
-            _text={{ color: 'black', fontWeight: "bold" }}
+            _text={{ color: 'black', fontWeight: 'bold' }}
             borderWidth="1"
             borderColor="muted.100"
             _pressed={{ bgColor: 'muted.100' }}
@@ -86,7 +86,7 @@ export default function Numpad() {
             py={5}
             rounded="0"
             bgColor="white"
-            _text={{ color: 'black', fontWeight: "bold" }}
+            _text={{ color: 'black', fontWeight: 'bold' }}
             borderWidth="1"
             borderColor="muted.100"
             _pressed={{ bgColor: 'muted.100' }}
@@ -98,7 +98,7 @@ export default function Numpad() {
             py={5}
             rounded="0"
             bgColor="white"
-            _text={{ color: 'black', fontWeight: "bold" }}
+            _text={{ color: 'black', fontWeight: 'bold' }}
             borderWidth="1"
             borderColor="muted.100"
             _pressed={{ bgColor: 'muted.100' }}
@@ -112,7 +112,7 @@ export default function Numpad() {
             py={5}
             rounded="0"
             bgColor="white"
-            _text={{ color: 'black', fontWeight: "bold" }}
+            _text={{ color: 'black', fontWeight: 'bold' }}
             borderWidth="1"
             borderColor="muted.100"
             _pressed={{ bgColor: 'muted.100' }}
@@ -124,7 +124,7 @@ export default function Numpad() {
             py={5}
             rounded="0"
             bgColor="white"
-            _text={{ color: 'black', fontWeight: "bold" }}
+            _text={{ color: 'black', fontWeight: 'bold' }}
             borderWidth="1"
             borderColor="muted.100"
             _pressed={{ bgColor: 'muted.100' }}
@@ -136,7 +136,7 @@ export default function Numpad() {
             py={5}
             rounded="0"
             bgColor="white"
-            _text={{ color: 'black', fontWeight: "bold" }}
+            _text={{ color: 'black', fontWeight: 'bold' }}
             borderWidth="1"
             borderColor="muted.100"
             _pressed={{ bgColor: 'muted.100' }}
@@ -148,7 +148,7 @@ export default function Numpad() {
             py={5}
             rounded="0"
             bgColor="white"
-            _text={{ color: 'black', fontWeight: "bold" }}
+            _text={{ color: 'black', fontWeight: 'bold' }}
             borderWidth="1"
             borderColor="muted.100"
             _pressed={{ bgColor: 'muted.100' }}
@@ -172,9 +172,10 @@ export default function Numpad() {
             py={'53px'}
             rounded="0"
             bgColor="muted.200"
-            _text={{ color: 'black', fontWeight: "bold" }}
+            _text={{ color: 'black', fontWeight: 'bold' }}
             borderWidth="1"
             borderColor="muted.100"
+            _pressed={{ bgColor: 'muted.300' }}
           >
             Lanjut
           </Button>
