@@ -17,6 +17,23 @@ export function getCustomers(token, params) {
     })
 }
 
+export function getDefaultCustomer(token, params) {
+  return axios({
+    method: 'GET',
+    url: `/customers?${qs.stringify(params)}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((res) => {
+      customers = res.data.data.customers
+      return customers.length > 0 ? customers[0] : { name: 'General Customer' }
+    })
+    .catch((err) => {
+      throw err
+    })
+}
+
 export function createCustomer(payload, token) {
   return axios({
     method: 'POST',

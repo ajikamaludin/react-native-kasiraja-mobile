@@ -1,8 +1,8 @@
 {
   "expo": {
     "name": "kasirAja POS",
-    "slug": "kasirAja POS",
-    "orientation": "potrait",
+    "slug": "kasirAja-POS",
+    "orientation": "portrait",
     "icon": "./assets/icons/logo512.png",
     "version": "1.0.0",
     "assetBundlePatterns": [

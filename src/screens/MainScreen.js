@@ -8,6 +8,7 @@ import CreateSaleScreen from './sales/CreateScreen'
 import BarcodeScanScreen from './sales/BarcodeScanScreen'
 import CreatePayScreen from './sales/CreatePayScreen'
 import SelectionCustomerScreen from './sales/SelectionCustomerScreen'
+import TransactionSuccessScreen from './sales/TransactionSuccessScreen'
 
 import CreateDetailScreen from './sales/CreateDetailScreen'
 import ProfileScreen from './profile/ProfileScreen'
@@ -104,6 +105,11 @@ export default function MainScreen({ navigationRef, drawer }) {
             name="SelectionCustomerScreen"
             component={SelectionCustomerScreen}
             options={{ title: 'pelanggan' }}
+          />
+          <Stack.Screen
+            name="TransactionSuccessScreen"
+            component={TransactionSuccessScreen}
+            options={{ headerShown: false }}
           />
         </Stack.Navigator>
       )}

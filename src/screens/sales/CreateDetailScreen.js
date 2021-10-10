@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { View, Text, VStack, HStack, Badge, Divider, Center, Button, Icon, Box, ScrollView } from 'native-base'
-import { MaterialIcons, Entypo } from '@expo/vector-icons' 
+import { MaterialIcons } from '@expo/vector-icons' 
+import { useFocusEffect } from '@react-navigation/native'
 
 import { useCart } from '../../contexts/AppContext'
 import { TouchableOpacity } from 'react-native'
@@ -11,22 +12,15 @@ import ModalItem from './ModalItem'
 import ModalDelete from './ModalDelete'
 
 export default function CreateDetailScreen({navigation}) {
-  const { cart, setCart } = useCart()
+  const { cart, setCart, resetCart } = useCart()
   
-  const [discount, setDiscount] = useState(0)
+  const [discount, setDiscount] = useState(+cart.discount > 0 ? +cart.discount : 0)
   const [modalDiscount, setModalDiscount] = useState(false)
 
   const [modalItem, setModalItem] = useState(false)
   const [selected, setSelected] = useState(null)
 
   const [modalDelete, setModalDelete] = useState(false)
-  
-  const handleRemoveCustomer = () => {
-    setCart({
-      ...cart,
-      customer: null
-    })
-  }
 
   const handleChangeItem = (newItem) => {
     setCart({
@@ -57,17 +51,17 @@ export default function CreateDetailScreen({navigation}) {
   }
 
   const handlDeleteOrder = () => {
-    setCart({ ...cart, items: [] })
+    resetCart()
   }
 
   const totalOrder = cart.items.reduce((amt, item) => +amt + +item.price * +item.quantity, 0)
   const totalOrderAfterDiscount = totalOrder - discount
 
-  useEffect(() => {
+  useFocusEffect(() => {
     if(cart.items.length <= 0) {
       navigation.goBack()
     }
-  }, [cart])
+  })
 
   return (
     <View flex={1} backgroundColor="white">
@@ -82,22 +76,11 @@ export default function CreateDetailScreen({navigation}) {
                   ? 'Pelanggan'
                   : cart?.customer?.name}
               </Text>
-              {cart?.customer === null ? (
-                <Icon
-                  size="sm"
-                  color="muted.500"
-                  as={<MaterialIcons name="arrow-forward-ios" />}
-                />
-              ) : (
-                <TouchableOpacity>
-                  <Icon
-                    size="sm"
-                    color="muted.500"
-                    as={<Entypo name="circle-with-cross" />}
-                    onPress={handleRemoveCustomer}
-                  />
-                </TouchableOpacity>
-              )}
+              <Icon
+                size="sm"
+                color="muted.500"
+                as={<MaterialIcons name="arrow-forward-ios" />}
+              />
             </HStack>
           </TouchableOpacity>
           <Divider borderColor="muted.300" w="100%" mb={1} />

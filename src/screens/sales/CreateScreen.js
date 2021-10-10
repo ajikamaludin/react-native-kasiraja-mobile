@@ -13,6 +13,7 @@ import { ToastAndroid } from 'react-native'
 import { AntDesign, MaterialCommunityIcons, Entypo } from '@expo/vector-icons' 
 import { useAuth, useCart } from '../../contexts/AppContext'
 import { getProducts } from '../products/Api'
+import { getDefaultCustomer } from '../customers/Api'
 import { useDebounce } from 'use-debounce'
 
 import ItemProduct from '../../components/ItemProduct'
@@ -102,6 +103,10 @@ export default function CreateSale(props) {
 
   useEffect(() => {
     refresh()
+    getDefaultCustomer(user.accessToken)
+    .then(customer => {
+      setCart({ ...cart, customer: customer})
+    })
     return () => {}
   }, [q])
 
