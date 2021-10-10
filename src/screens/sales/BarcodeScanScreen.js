@@ -110,18 +110,20 @@ export default function BarcodeScanScreen({ navigation }) {
           Scan Again
         </Button>
       )}
-      <FabButton
-        icon={
-          <Icon
-            color="white"
-            as={<AntDesign name="shoppingcart" />}
-            size="sm"
-          />
-        }
-        h={10}
-        onPress={() => navigation.navigate('CreateDetailScreen')}
-        label={`${totalQuantity} barang`}
-      />
+      {cart.items.length > 0 ? (
+        <FabButton
+          icon={
+            <Icon
+              color="white"
+              as={<AntDesign name="shoppingcart" />}
+              size="sm"
+            />
+          }
+          h={10}
+          onPress={() => navigation.navigate('CreateDetailScreen')}
+          label={`${totalQuantity} barang`}
+        />
+      ) : null}
     </View>
   )
 }

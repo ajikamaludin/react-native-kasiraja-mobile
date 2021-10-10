@@ -34,6 +34,8 @@ export default function ProfileScreen(props) {
             setModalVisible(true)
           }}
           mt="5"
+          _pressed={{bg: "muted.200"}}
+          variant="outline"
         >
           Logout
         </Button>
