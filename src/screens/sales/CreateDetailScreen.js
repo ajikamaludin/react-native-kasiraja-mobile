@@ -4,7 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons'
 import { useFocusEffect } from '@react-navigation/native'
 
 import { useCart } from '../../contexts/AppContext'
-import { TouchableOpacity } from 'react-native'
+import { TouchableOpacity, ToastAndroid } from 'react-native'
 import { formatIDR } from '../../utils'
 
 import ModalDiscount from './ModalDiscount'
@@ -129,7 +129,7 @@ export default function CreateDetailScreen({navigation}) {
           </VStack>
 
           <Center mt="5" mb="32">
-            <Button onPress={() => setModalDelete(true)}>Hapus Pesanan</Button>
+            <Button variant="outline" _pressed={{bg: "muted.200"}} onPress={() => setModalDelete(true)}>Hapus Pesanan</Button>
           </Center>
         </VStack>
       </ScrollView>
@@ -149,6 +149,10 @@ export default function CreateDetailScreen({navigation}) {
           </HStack>
           <Button
             onPress={() => {
+              if(cart.customer?.id === undefined) {
+                ToastAndroid.show('Pelanggan belum dipilih', ToastAndroid.SHORT)
+                return
+              }
               navigation.navigate('CreatePayScreen')
             }}
           >

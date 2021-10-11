@@ -1,6 +1,7 @@
 import React, { useEffect } from "react"
 import { View, Text, VStack, CheckIcon, Input, Button, Center, Circle } from 'native-base'
 import { useCart } from "../../contexts/AppContext";
+import { ToastAndroid } from "react-native";
 
 export default function TransactionSuccessScreen({ route, navigation }){
   const { resetCart } = useCart()
@@ -36,6 +37,7 @@ export default function TransactionSuccessScreen({ route, navigation }){
           <Input
             variant="outline"
             placeholder="081XXXXXXXXX"
+            keyboardType="number-pad"
             InputRightElement={
               <Button
                 variant="ghost"
@@ -43,7 +45,7 @@ export default function TransactionSuccessScreen({ route, navigation }){
                 _text={{ color: 'muted.200' }}
                 mr={1}
                 onPress={() => {
-                  alert('Cooming soon...')
+                  ToastAndroid.show('Cooming Soon...', ToastAndroid.SHORT)
                 }}
               >
                 Kirim Struk
@@ -58,12 +60,14 @@ export default function TransactionSuccessScreen({ route, navigation }){
             _pressed={{ bg: 'muted.100' }}
             size="lg"
             onPress={() => {
-              alert('Cooming soon...')
+              ToastAndroid.show('Cooming Soon...', ToastAndroid.SHORT)
             }}
           >
             Cetak Struk
           </Button>
-          <Button size="lg" onPress={goToCreateSale}>Buat Pesanan Baru</Button>
+          <Button size="lg" onPress={goToCreateSale}>
+            Buat Pesanan Baru
+          </Button>
         </VStack>
       </VStack>
     </View>

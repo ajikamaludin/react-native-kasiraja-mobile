@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View, Text, VStack, HStack, Button, Box, Input, Center, Flex, Modal, Spinner } from 'native-base'
-import { TouchableWithoutFeedback, Keyboard, Pressable, Animated, Image, TouchableHighlight } from 'react-native'
+import { TouchableWithoutFeedback, Keyboard, Pressable, Animated, Image, TouchableHighlight, ToastAndroid } from 'react-native'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { TabView, SceneMap } from 'react-native-tab-view'
 import { FontAwesome } from '@expo/vector-icons' 
@@ -73,7 +73,7 @@ const TunaiComponent = () => {
       .then(() => {
         gotoTransactionSuccess(cash)
       })
-      .catch(() => alert('Terjadi Kesalahan'))
+      .catch((err) => ToastAndroid.show(err?.message, ToastAndroid.SHORT))
       .finally(() => setLoading(false))
   }
 
@@ -129,7 +129,7 @@ const TunaiComponent = () => {
 const NonTunaiComponent = () => {
   return (
     <HStack mt={5} p={2}>
-      <TouchableHighlight onPress={() => alert('Cooming soon...')}>
+      <TouchableHighlight onPress={() => ToastAndroid.show('Cooming Soon...', ToastAndroid.SHORT)}>
         <Box p={2} bg="muted.100">
           <Text ml={2} fontSize={18} fontWeight="bold">
             E-Wallet
