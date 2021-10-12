@@ -21,8 +21,11 @@ import ListCustomerScreen from './customers/ListScreen'
 import CreateCustomerScreen from './customers/CreateScreen'
 import EditCustomerScreen from './customers/EditScreen'
 
-import ListProductScreen from './products/ListScreen'
 import ListUserScreen from './users/ListScreen'
+import CreateUserScreen from './users/CreateScreen'
+import EditUserScreen from './users/EditScreen'
+
+import ListProductScreen from './products/ListScreen'
 
 import ListSaleScreen from './sales/ListScreen'
 import ListPurchaseScreen from './purchases/ListScreen'
@@ -138,6 +141,16 @@ export default function MainScreen({ navigationRef, drawer }) {
             name="EditCustomerScreen"
             component={EditCustomerScreen}
             options={{ title: 'detail pelanggan' }}
+          />
+          <Stack.Screen
+            name="CreateUserScreen"
+            component={CreateUserScreen}
+            options={{ title: 'buat pengguna' }}
+          />
+          <Stack.Screen
+            name="EditUserScreen"
+            component={EditUserScreen}
+            options={{ title: 'detail pengguna' }}
           />
         </Stack.Navigator>
       )}

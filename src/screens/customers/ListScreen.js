@@ -16,15 +16,13 @@ import { useDebounce } from 'use-debounce'
 import { AntDesign, Entypo } from '@expo/vector-icons'
 
 import { ToastAndroid, TouchableHighlight } from 'react-native'
-import { useAuth, useCart } from '../../contexts/AppContext'
+import { useAuth } from '../../contexts/AppContext'
 import { getCustomers } from '../customers/Api'
 
 import FabButton from '../../components/FabButton'
 
-
 export default function ListScreen({ navigation }) {
   const { user } = useAuth()
-  const { cart, setCart } = useCart()
 
   const [items, setItems] = useState([])
   const [search, setSearch] = useState('')
@@ -35,7 +33,7 @@ export default function ListScreen({ navigation }) {
   const [isLoadMore, setIsLoadMore] = useState(false)
 
   const fetch = async (params, refresh = false) => {
-    await getCustomers(user.accessToken, { ...params, withStock: true })
+    await getCustomers(user.accessToken, { ...params })
       .then((res) => {
         if (+res.meta.total === items.length) {
           setIsCanLoadMore(false)
