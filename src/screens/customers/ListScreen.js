@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useCallback } from 'react'
 import {
   View,
   VStack,
@@ -11,13 +11,16 @@ import {
   Box,
   HStack,
 } from 'native-base'
+import { useFocusEffect } from '@react-navigation/native'
+import { useDebounce } from 'use-debounce'
+import { AntDesign, Entypo } from '@expo/vector-icons'
+
 import { ToastAndroid, TouchableHighlight } from 'react-native'
 import { useAuth, useCart } from '../../contexts/AppContext'
 import { getCustomers } from '../customers/Api'
 
-import { AntDesign, Entypo } from '@expo/vector-icons'
+import FabButton from '../../components/FabButton'
 
-import { useDebounce } from 'use-debounce'
 
 export default function ListScreen({ navigation }) {
   const { user } = useAuth()
@@ -68,18 +71,11 @@ export default function ListScreen({ navigation }) {
     setIsRefresh(false)
   }
 
-  const handleSelectedCustomer = (customer) => {
-    setCart({
-      ...cart,
-      customer: customer,
-    })
-    navigation.goBack()
-  }
-
-  useEffect(() => {
-    refresh()
-    return () => {}
-  }, [q])
+  useFocusEffect(
+    useCallback(() => {
+      refresh()
+    }, [q])
+  )
 
   const ItemCustomer = ({ item, onPress }) => {
     return (
@@ -138,7 +134,11 @@ export default function ListScreen({ navigation }) {
           minHeight="64"
           data={items}
           renderItem={({ item }) => (
-            <ItemCustomer item={item} onPress={handleSelectedCustomer} />
+            <ItemCustomer item={item} onPress={() => {
+              navigation.navigate('EditCustomerScreen', {
+                id: item.id
+              })
+            }} />
           )}
           keyExtractor={(item) => {
             return item.id
@@ -151,6 +151,12 @@ export default function ListScreen({ navigation }) {
         />
         {isLoadMore && <Spinner />}
       </VStack>
+      <FabButton
+        icon={<Icon color="white" as={<AntDesign name="plus" />} size="sm" />}
+        onPress={() => navigation.navigate('CreateCustomerScreen')}
+        h={10}
+        label="baru"
+      />
     </View>
   )
 }

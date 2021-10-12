@@ -17,9 +17,13 @@ import ListCategoryScreen from './categories/ListScreen'
 import CreateCategoryScreen from './categories/CreateScreen'
 import EditCategoryScreen from './categories/EditScreen'
 
+import ListCustomerScreen from './customers/ListScreen'
+import CreateCustomerScreen from './customers/CreateScreen'
+import EditCustomerScreen from './customers/EditScreen'
+
 import ListProductScreen from './products/ListScreen'
 import ListUserScreen from './users/ListScreen'
-import ListCustomerScreen from './customers/ListScreen'
+
 import ListSaleScreen from './sales/ListScreen'
 import ListPurchaseScreen from './purchases/ListScreen'
 
@@ -124,6 +128,16 @@ export default function MainScreen({ navigationRef, drawer }) {
             name="EditCategoryScreen"
             component={EditCategoryScreen}
             options={{ title: 'detail kategori' }}
+          />
+          <Stack.Screen
+            name="CreateCustomerScreen"
+            component={CreateCustomerScreen}
+            options={{ title: 'buat pelanggan' }}
+          />
+          <Stack.Screen
+            name="EditCustomerScreen"
+            component={EditCustomerScreen}
+            options={{ title: 'detail pelanggan' }}
           />
         </Stack.Navigator>
       )}
