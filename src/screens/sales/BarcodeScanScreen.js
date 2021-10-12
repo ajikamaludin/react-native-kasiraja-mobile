@@ -19,7 +19,11 @@ export default function BarcodeScanScreen({ navigation }) {
   const addItem = async(code) => {
     await searchProductByCode(user.accessToken, code)
       .then((item) => {
-        if(item !== undefined) {
+        if (item !== undefined) {
+          if (+item.stock <= 0) {
+            ToastAndroid.show('stok tidak tersedia', ToastAndroid.SHORT)
+            return
+          }
           const exists = cart.items.find((cartItem) => cartItem.id === item.id)
           if (exists) {
             setCart({
@@ -28,7 +32,7 @@ export default function BarcodeScanScreen({ navigation }) {
                 if (cartItem.id === item.id) {
                   return {
                     ...cartItem,
-                    quantity: cartItem.quantity + 1,
+                    quantity: +item.stock >= cartItem.quantity + 1 ? cartItem.quantity + 1 : +item.stock
                   }
                 }
                 return cartItem

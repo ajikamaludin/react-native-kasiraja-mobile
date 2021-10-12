@@ -17,7 +17,6 @@ import ModalConfirm from '../../components/ModalConfirm'
 
 export default function EditScreen({ navigation, route }) {
   const { id, user_name, user_email } = route.params
-  console.log(route.params)
   const { user } = useAuth()
   const [isOpen, setOpen] = useState('')
   const [loading, setLoading] = useState(false)

@@ -83,7 +83,7 @@ export default function ListScreen({ navigation }) {
         <Box m={1} p={2} shadow={2} rounded="10" bgColor="white">
           <HStack>
             <VStack py={4}>
-              <Text>{item?.name}</Text>
+              <Text fontWeight="bold">{item?.name}</Text>
             </VStack>
           </HStack>
         </Box>

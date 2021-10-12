@@ -94,7 +94,7 @@ export default function ListScreen({ navigation }) {
                 .toUpperCase()}
             </Avatar>
             <VStack>
-              <Text>{item?.name}</Text>
+              <Text fontWeight="bold">{item?.name}</Text>
               <Text>{item?.phone}</Text>
             </VStack>
           </HStack>

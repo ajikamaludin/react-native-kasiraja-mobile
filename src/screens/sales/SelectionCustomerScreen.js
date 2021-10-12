@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useCallback } from 'react'
 import { View, VStack, Icon, FlatList, Input, Text, Spinner, Avatar, Box, HStack } from 'native-base'
 import { ToastAndroid, TouchableHighlight } from 'react-native'
 import { useAuth, useCart } from '../../contexts/AppContext'
@@ -7,6 +7,8 @@ import { getCustomers } from '../customers/Api'
 import { AntDesign, Entypo } from '@expo/vector-icons' 
 
 import { useDebounce } from 'use-debounce'
+import FabButton from '../../components/FabButton'
+import { useFocusEffect } from '@react-navigation/native'
 
 export default function SelectionCustomerScreen({ navigation }) {
   const { user } = useAuth()
@@ -65,10 +67,9 @@ export default function SelectionCustomerScreen({ navigation }) {
     navigation.goBack();
   }
 
-  useEffect(() => {
+  useFocusEffect(useCallback(() => {
     refresh()
-    return () => {}
-  }, [q])
+  }, [q]))
 
   const ItemCustomer = ({ item, onPress }) => {
     return (
@@ -89,7 +90,7 @@ export default function SelectionCustomerScreen({ navigation }) {
                 .toUpperCase()}
             </Avatar>
             <VStack>
-              <Text>{item?.name}</Text>
+              <Text fontWeight="bold">{item?.name}</Text>
               <Text>{item?.phone}</Text>
             </VStack>
           </HStack>
@@ -140,6 +141,12 @@ export default function SelectionCustomerScreen({ navigation }) {
         />
         {isLoadMore && <Spinner />}
       </VStack>
+      <FabButton
+        icon={<Icon color="white" as={<AntDesign name="plus" />} size="sm" />}
+        onPress={() => navigation.navigate('CreateCustomerScreen')}
+        h={10}
+        label="baru"
+      />
     </View>
   )
 }

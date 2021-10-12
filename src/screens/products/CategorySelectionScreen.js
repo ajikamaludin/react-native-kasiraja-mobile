@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import {
   View,
   VStack,
@@ -7,23 +7,21 @@ import {
   Input,
   Text,
   Spinner,
-  Avatar,
   Box,
-  Flex,
   HStack,
 } from 'native-base'
-import { useFocusEffect } from '@react-navigation/native'
-import { useDebounce } from 'use-debounce'
 import { AntDesign, Entypo } from '@expo/vector-icons'
-
 import { ToastAndroid, TouchableHighlight } from 'react-native'
-import { useAuth } from '../../contexts/AppContext'
-import { getUsers } from './Api'
-
+import { useFocusEffect } from '@react-navigation/native'
 import FabButton from '../../components/FabButton'
+import { useAuth, useTempStore } from '../../contexts/AppContext'
+import { getCategories } from '../categories/Api'
 
-export default function ListScreen({ navigation }) {
+import { useDebounce } from 'use-debounce'
+
+export default function SelectionScreen({ navigation }) {
   const { user } = useAuth()
+  const { setTemp } = useTempStore()
 
   const [items, setItems] = useState([])
   const [search, setSearch] = useState('')
@@ -34,7 +32,7 @@ export default function ListScreen({ navigation }) {
   const [isLoadMore, setIsLoadMore] = useState(false)
 
   const fetch = async (params, refresh = false) => {
-    await getUsers(user.accessToken, { ...params })
+    await getCategories({ ...params }, user.accessToken)
       .then((res) => {
         if (+res.meta.total === items.length) {
           setIsCanLoadMore(false)
@@ -43,9 +41,9 @@ export default function ListScreen({ navigation }) {
           setPage(+res.meta.page + 1)
         }
         if (refresh) {
-          setItems(res.users.filter(user => user.role !== 'admin'))
+          setItems(res.categories)
         } else {
-          setItems(items.concat(res.users.filter((user) => user.role !== 'admin')))
+          setItems(items.concat(res.categories))
         }
       })
       .catch((err) => {
@@ -76,7 +74,7 @@ export default function ListScreen({ navigation }) {
     }, [q])
   )
 
-  const ItemUser = ({ item, onPress }) => {
+  const ItemCategory = ({ item, onPress }) => {
     return (
       <TouchableHighlight
         onPress={() => {
@@ -86,21 +84,10 @@ export default function ListScreen({ navigation }) {
         underlayColor="#FFFFFF"
       >
         <Box m={1} p={2} shadow={2} rounded="10" bgColor="white">
-          <HStack justifyContent="space-between">
-            <HStack>
-              <Avatar mr={2}>
-                {item?.name
-                  .split(' ', 2)
-                  .map((n) => n[0])
-                  .join('')
-                  .toUpperCase()}
-              </Avatar>
-              <VStack>
-                <Text fontWeight="bold">{item?.name}</Text>
-                <Text>{item?.email}</Text>
-              </VStack>
-            </HStack>
-            <Text>{item.role}</Text>
+          <HStack>
+            <VStack py={4}>
+              <Text fontWeight="bold">{item?.name}</Text>
+            </VStack>
           </HStack>
         </Box>
       </TouchableHighlight>
@@ -136,14 +123,11 @@ export default function ListScreen({ navigation }) {
           minHeight="64"
           data={items}
           renderItem={({ item }) => (
-            <ItemUser
+            <ItemCategory
               item={item}
               onPress={() => {
-                navigation.navigate('EditUserScreen', {
-                  id: item.id,
-                  user_name: item.name,
-                  user_email: item.email,
-                })
+                setTemp({ category: item })
+                navigation.goBack()
               }}
             />
           )}
@@ -160,7 +144,7 @@ export default function ListScreen({ navigation }) {
       </VStack>
       <FabButton
         icon={<Icon color="white" as={<AntDesign name="plus" />} size="sm" />}
-        onPress={() => navigation.navigate('CreateUserScreen')}
+        onPress={() => navigation.navigate('CreateCategoryScreen')}
         h={10}
         label="baru"
       />

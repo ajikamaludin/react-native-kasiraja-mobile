@@ -26,6 +26,9 @@ import CreateUserScreen from './users/CreateScreen'
 import EditUserScreen from './users/EditScreen'
 
 import ListProductScreen from './products/ListScreen'
+import CreateProductScreen from './products/CreateScreen'
+import SelectionCategoryScreen from './products/CategorySelectionScreen'
+import EditProductScreen from './products/EditScreen'
 
 import ListSaleScreen from './sales/ListScreen'
 import ListPurchaseScreen from './purchases/ListScreen'
@@ -151,6 +154,21 @@ export default function MainScreen({ navigationRef, drawer }) {
             name="EditUserScreen"
             component={EditUserScreen}
             options={{ title: 'detail pengguna' }}
+          />
+          <Stack.Screen
+            name="CreateProductScreen"
+            component={CreateProductScreen}
+            options={{ title: 'buat produk' }}
+          />
+          <Stack.Screen
+            name="EditProductScreen"
+            component={EditProductScreen}
+            options={{ title: 'detail produk' }}
+          />
+          <Stack.Screen
+            name="SelectionCategoryScreen"
+            component={SelectionCategoryScreen}
+            options={{ title: 'kategori' }}
           />
         </Stack.Navigator>
       )}

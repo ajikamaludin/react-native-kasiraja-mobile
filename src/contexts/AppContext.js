@@ -48,15 +48,18 @@ function AppProvider(props) {
   const [user, setUser] = useState(null)
 
   const [cart, setCart] = useState({ items: [], customer: null, payAmount: 0, discount: 0 })
+  const [temp, setTemp] = useState({})
 
   const value = useMemo(
     () => ({
       user,
       setUser,
       cart,
-      setCart
+      setCart,
+      temp,
+      setTemp,
     }),
-    [user, setUser, cart, setCart]
+    [user, setUser, cart, setCart, temp, setTemp]
   )
 
   const getUser = async () => {
@@ -109,10 +112,27 @@ function AppProvider(props) {
   )
 }
 
+function useTempStore() {
+  const appContext = useContext(AppContext)
+  if (!appContext) {
+    throw Error('useTempStore must be used within AppProvider')
+  }
+
+  const { temp, setTemp } = appContext
+
+  const resetTemp = () =>setCart({})
+
+  return {
+    temp,
+    setTemp,
+    resetTemp,
+  }
+}
+
 function useCart() {
   const appContext = useContext(AppContext)
   if (!appContext) {
-    throw Error('useAuth must be used within AppProvider')
+    throw Error('useCart must be used within AppProvider')
   }
 
   const { cart, setCart } = appContext
@@ -157,4 +177,4 @@ function useAuth() {
   }
 }
 
-export { AppProvider, useAuth, useCart }
+export { AppProvider, useAuth, useCart, useTempStore }
