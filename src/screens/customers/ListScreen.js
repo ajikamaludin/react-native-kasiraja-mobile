@@ -1,10 +1,156 @@
-import React from 'react'
-import { Text, View } from 'native-base'
+import React, { useState, useEffect } from 'react'
+import {
+  View,
+  VStack,
+  Icon,
+  FlatList,
+  Input,
+  Text,
+  Spinner,
+  Avatar,
+  Box,
+  HStack,
+} from 'native-base'
+import { ToastAndroid, TouchableHighlight } from 'react-native'
+import { useAuth, useCart } from '../../contexts/AppContext'
+import { getCustomers } from '../customers/Api'
 
-export default function ListScreen() {
+import { AntDesign, Entypo } from '@expo/vector-icons'
+
+import { useDebounce } from 'use-debounce'
+
+export default function ListScreen({ navigation }) {
+  const { user } = useAuth()
+  const { cart, setCart } = useCart()
+
+  const [items, setItems] = useState([])
+  const [search, setSearch] = useState('')
+  const [q] = useDebounce(search, 500)
+  const [page, setPage] = useState(1)
+  const [isCanLoadMore, setIsCanLoadMore] = useState(true)
+  const [isRefresh, setIsRefresh] = useState(false)
+  const [isLoadMore, setIsLoadMore] = useState(false)
+
+  const fetch = async (params, refresh = false) => {
+    await getCustomers(user.accessToken, { ...params, withStock: true })
+      .then((res) => {
+        if (+res.meta.total === items.length) {
+          setIsCanLoadMore(false)
+        } else {
+          setIsCanLoadMore(true)
+          setPage(+res.meta.page + 1)
+        }
+        if (refresh) {
+          setItems(res.customers)
+        } else {
+          setItems(items.concat(res.customers))
+        }
+      })
+      .catch((err) => {
+        ToastAndroid.show(err?.message, ToastAndroid.SHORT)
+      })
+  }
+
+  const handleNextPage = async () => {
+    if (isCanLoadMore && !isLoadMore) {
+      setIsLoadMore(true)
+      await fetch({ page, q })
+      setIsLoadMore(false)
+    }
+  }
+
+  const refresh = async () => {
+    setIsRefresh(true)
+    setIsCanLoadMore(true)
+    setPage(1)
+    setItems([])
+    await fetch({ page: 1, q }, true)
+    setIsRefresh(false)
+  }
+
+  const handleSelectedCustomer = (customer) => {
+    setCart({
+      ...cart,
+      customer: customer,
+    })
+    navigation.goBack()
+  }
+
+  useEffect(() => {
+    refresh()
+    return () => {}
+  }, [q])
+
+  const ItemCustomer = ({ item, onPress }) => {
+    return (
+      <TouchableHighlight
+        onPress={() => {
+          onPress(item)
+        }}
+        activeOpacity={0.6}
+        underlayColor="#FFFFFF"
+      >
+        <Box m={1} p={2} shadow={2} rounded="10" bgColor="white">
+          <HStack>
+            <Avatar mr={2}>
+              {item?.name
+                .split(' ', 2)
+                .map((n) => n[0])
+                .join('')
+                .toUpperCase()}
+            </Avatar>
+            <VStack>
+              <Text>{item?.name}</Text>
+              <Text>{item?.phone}</Text>
+            </VStack>
+          </HStack>
+        </Box>
+      </TouchableHighlight>
+    )
+  }
+
   return (
-    <View p={1}>
-      <Text color="black">Customers List</Text>
+    <View flex={1} bgColor="white">
+      <VStack space={1} maxHeight={'100%'} p={1}>
+        <Input
+          InputLeftElement={
+            <Icon
+              as={<AntDesign name="search1" />}
+              size={5}
+              ml="2"
+              color="muted.400"
+            />
+          }
+          InputRightElement={
+            <Icon
+              as={<Entypo name="circle-with-cross" />}
+              size={5}
+              mr="2"
+              color="muted.400"
+              onPress={() => setSearch('')}
+            />
+          }
+          placeholder="cari"
+          value={search}
+          onChangeText={(text) => setSearch(text)}
+        />
+        <FlatList
+          minHeight="64"
+          data={items}
+          renderItem={({ item }) => (
+            <ItemCustomer item={item} onPress={handleSelectedCustomer} />
+          )}
+          keyExtractor={(item) => {
+            return item.id
+          }}
+          refreshing={isRefresh}
+          onRefresh={() => refresh()}
+          onEndReached={() => handleNextPage()}
+          onEndReachedThreshold={0.5}
+          initialNumToRender={10}
+        />
+        {isLoadMore && <Spinner />}
+      </VStack>
     </View>
   )
 }

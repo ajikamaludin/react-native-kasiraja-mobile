@@ -46,7 +46,7 @@ export default function BarcodeScanScreen({ navigation }) {
         }
       })
       .catch((err) => {
-        console.log(err)
+        ToastAndroid.show(err, ToastAndroid.SHORT)
       })
   }
 

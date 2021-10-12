@@ -12,7 +12,11 @@ import TransactionSuccessScreen from './sales/TransactionSuccessScreen'
 
 import CreateDetailScreen from './sales/CreateDetailScreen'
 import ProfileScreen from './profile/ProfileScreen'
+
 import ListCategoryScreen from './categories/ListScreen'
+import CreateCategoryScreen from './categories/CreateScreen'
+import EditCategoryScreen from './categories/EditScreen'
+
 import ListProductScreen from './products/ListScreen'
 import ListUserScreen from './users/ListScreen'
 import ListCustomerScreen from './customers/ListScreen'
@@ -110,6 +114,16 @@ export default function MainScreen({ navigationRef, drawer }) {
             name="TransactionSuccessScreen"
             component={TransactionSuccessScreen}
             options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="CreateCategoryScreen"
+            component={CreateCategoryScreen}
+            options={{ title: 'buat kategori' }}
+          />
+          <Stack.Screen
+            name="EditCategoryScreen"
+            component={EditCategoryScreen}
+            options={{ title: 'detail kategori' }}
           />
         </Stack.Navigator>
       )}
