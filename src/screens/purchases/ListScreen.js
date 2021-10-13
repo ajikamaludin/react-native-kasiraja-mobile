@@ -67,7 +67,6 @@ export default function ListScreen({ navigation }) {
       endDate: formatDate(dates.endDate),
     })
       .then((res) => {
-        console.log(res)
         if (+res.meta.total === items.length) {
           setIsCanLoadMore(false)
         } else {

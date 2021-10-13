@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { View, Text, Button, Avatar, Box, HStack, VStack, Center, Modal } from 'native-base'
+import { TouchableWithoutFeedback } from 'react-native'
 import { useAuth } from '../../contexts/AppContext'
 
 export default function ProfileScreen({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false)
   const { user, logout } = useAuth()
+  const [counter, setCounter] = useState(0)
 
   return (
     <View flex={1} p={2} backgroundColor="white">
@@ -19,19 +21,25 @@ export default function ProfileScreen({ navigation }) {
                 .toUpperCase()}
             </Avatar>
             <VStack>
-              <Text color="black" fontWeight="bold">{user?.name}</Text>
+              <Text color="black" fontWeight="bold">
+                {user?.name}
+              </Text>
               <Text color="black">{user?.email}</Text>
             </VStack>
           </HStack>
 
-          <Button onPress={() => {
-            navigation.navigate('EditUserScreen', {
-              id: user.id,
-              user_name: user.name,
-              user_email: user.email,
-              isCanDelete: false,
-            })
-          }}>Atur Akun</Button>
+          <Button
+            onPress={() => {
+              navigation.navigate('EditUserScreen', {
+                id: user.id,
+                user_name: user.name,
+                user_email: user.email,
+                isCanDelete: false,
+              })
+            }}
+          >
+            Atur Akun
+          </Button>
         </HStack>
       </Box>
       <Center mt="5">
@@ -41,21 +49,36 @@ export default function ProfileScreen({ navigation }) {
             setModalVisible(true)
           }}
           mt="5"
-          _pressed={{bg: "muted.200"}}
+          _pressed={{ bg: 'muted.200' }}
           variant="outline"
         >
           Logout
         </Button>
       </Center>
-      <Modal
-        isOpen={modalVisible}
-        onClose={() => setModalVisible(false)}
+      <TouchableWithoutFeedback
+        onPress={() => {
+          setCounter(counter > 15 ? 0 : counter + 1)
+        }}
       >
+        <Box flex={1} bg={counter >= 10 ? "muted.200" : "transparent"} w="100%" pt="10">
+          {counter >= 10 && (
+            <VStack>
+              <Text fontWeight="bold" fontSize={48}>
+                Author: {'Aji Kamaludin'}
+              </Text>
+              <Text fontWeight="bold" fontSize={48}>
+                {'<aji19kamaludin @gmail.com>'}
+              </Text>
+            </VStack>
+          )}
+        </Box>
+      </TouchableWithoutFeedback>
+      <Modal isOpen={modalVisible} onClose={() => setModalVisible(false)}>
         <Modal.Content>
           <Modal.Header>
             <Text>Yakin ingin keluar ?</Text>
           </Modal.Header>
-          
+
           <Modal.Footer>
             <Button.Group space={2}>
               <Button
