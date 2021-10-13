@@ -7,7 +7,6 @@ import {
   Input,
   Text,
   Spinner,
-  Avatar,
   Box,
   HStack,
 } from 'native-base'

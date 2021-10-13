@@ -31,6 +31,8 @@ import SelectionCategoryScreen from './products/CategorySelectionScreen'
 import EditProductScreen from './products/EditScreen'
 
 import ListSaleScreen from './sales/ListScreen'
+import DetailSaleScreen from './sales/DetailScreen'
+
 import ListPurchaseScreen from './purchases/ListScreen'
 
 import { NavigationContainer } from '@react-navigation/native'
@@ -169,6 +171,11 @@ export default function MainScreen({ navigationRef, drawer }) {
             name="SelectionCategoryScreen"
             component={SelectionCategoryScreen}
             options={{ title: 'kategori' }}
+          />
+          <Stack.Screen 
+            name="DetailSaleScreen" 
+            component={DetailSaleScreen} 
+            options={{ title: 'detail' }}
           />
         </Stack.Navigator>
       )}

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { View, Text, Button, Avatar, Box, HStack, VStack, Center, Modal } from 'native-base'
 import { useAuth } from '../../contexts/AppContext'
 
-export default function ProfileScreen(props) {
+export default function ProfileScreen({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false)
   const { user, logout } = useAuth()
 
@@ -24,7 +24,14 @@ export default function ProfileScreen(props) {
             </VStack>
           </HStack>
 
-          <Button>Atur Akun</Button>
+          <Button onPress={() => {
+            navigation.navigate('EditUserScreen', {
+              id: user.id,
+              user_name: user.name,
+              user_email: user.email,
+              isCanDelete: false,
+            })
+          }}>Atur Akun</Button>
         </HStack>
       </Box>
       <Center mt="5">

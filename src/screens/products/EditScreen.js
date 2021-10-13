@@ -57,7 +57,7 @@ export default function EditScreen({ navigation, route }) {
       user.accessToken
     )
       .then(() => {
-        ToastAndroid.show('Produk dubah', ToastAndroid.SHORT)
+        ToastAndroid.show('Produk diubah', ToastAndroid.SHORT)
         navigation.goBack()
       })
       .catch((err) => {
@@ -118,7 +118,7 @@ export default function EditScreen({ navigation, route }) {
                   variant="outline"
                   borderColor="muted.100"
                   _pressed={{ bg: 'muted.200' }}
-                  icon={<MaterialCommunityIcons name="barcode" size={24} />}
+                  icon={<MaterialCommunityIcons name="barcode" size={24} color="black"/>}
                   onPress={() => setScanOpen(true)}
                 />
               }

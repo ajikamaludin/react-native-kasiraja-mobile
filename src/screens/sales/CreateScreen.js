@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import {
   View,
   VStack,
@@ -10,6 +10,7 @@ import {
   Icon,
 } from 'native-base'
 import { ToastAndroid } from 'react-native'
+import { useFocusEffect } from '@react-navigation/native'
 import { AntDesign, MaterialCommunityIcons, Entypo } from '@expo/vector-icons' 
 import { useAuth, useCart } from '../../contexts/AppContext'
 import { getProducts } from '../products/Api'
@@ -101,14 +102,17 @@ export default function CreateSale(props) {
     setIsRefresh(false)
   }
 
+  useFocusEffect(
+    useCallback(() => {
+      refresh()
+    }, [q])
+  )
+
   useEffect(() => {
-    refresh()
-    getDefaultCustomer(user.accessToken)
-    .then(customer => {
-      setCart({ ...cart, customer: customer})
+    getDefaultCustomer(user.accessToken).then((customer) => {
+      setCart({ ...cart, customer: customer })
     })
-    return () => {}
-  }, [q])
+  }, [])
 
   return (
     <View flex={1} bgColor="white">

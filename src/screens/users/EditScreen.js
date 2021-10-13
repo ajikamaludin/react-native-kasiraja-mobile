@@ -10,13 +10,13 @@ import {
   WarningOutlineIcon,
 } from 'native-base'
 import { useAuth } from '../../contexts/AppContext'
-import { updateUser, deleteUser } from './Api'
+import { updateUser, deleteUser, getUser } from './Api'
 import { ToastAndroid } from 'react-native'
 import ModalLoading from '../../components/ModalLoading'
 import ModalConfirm from '../../components/ModalConfirm'
 
 export default function EditScreen({ navigation, route }) {
-  const { id, user_name, user_email } = route.params
+  const { id, user_name, user_email, isCanDelete = true } = route.params
   const { user } = useAuth()
   const [isOpen, setOpen] = useState('')
   const [loading, setLoading] = useState(false)
@@ -101,15 +101,17 @@ export default function EditScreen({ navigation, route }) {
         shadow={6}
       >
         <HStack space={1}>
-          <Button
-            w="50%"
-            variant="outline"
-            _pressed={{ bg: 'muted.200' }}
-            onPress={() => setOpen(true)}
-          >
-            Hapus
-          </Button>
-          <Button w="50%" onPress={handleSubmit}>
+          {isCanDelete && (
+            <Button
+              w="50%"
+              variant="outline"
+              _pressed={{ bg: 'muted.200' }}
+              onPress={() => setOpen(true)}
+            >
+              Hapus
+            </Button>
+          )}
+          <Button w={isCanDelete ? "50%" : "100%"} onPress={handleSubmit}>
             Simpan
           </Button>
         </HStack>

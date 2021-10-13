@@ -64,7 +64,7 @@ const TunaiComponent = () => {
       customerId: cart.customer.id,
       date: date.toLocaleDateString(),
       amount: totalOrder,
-      discount: cart.discount,
+      discount: cart?.discount,
       description: '',
       items
     },

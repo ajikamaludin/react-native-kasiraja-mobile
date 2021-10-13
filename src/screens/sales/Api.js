@@ -15,3 +15,31 @@ export function createSale(payload, token) {
       throw err.response.data
     })
 }
+
+export function getSales(token, params) {
+  return axios({
+    method: 'GET',
+    url: `/sales?${qs.stringify(params)}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((res) => res.data.data)
+    .catch((err) => {
+      throw err.response.data
+    })
+}
+
+export function getSale(id, token) {
+  return axios({
+    method: 'GET',
+    url: `/sales/${id}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((res) => res.data.data)
+    .catch((err) => {
+      throw err.response.data
+    })
+}

@@ -114,7 +114,7 @@ export default function CreateScreen({ navigation }) {
               placeholder="Harga beli"
               keyboardType="number-pad"
               onChangeText={(text) => setCost(text)}
-              value={cost}
+              value={`${cost}`}
             />
           </FormControl>
           <FormControl>
@@ -124,7 +124,7 @@ export default function CreateScreen({ navigation }) {
               placeholder="Harga jual"
               keyboardType="number-pad"
               onChangeText={(text) => setPrice(text)}
-              value={price}
+              value={`${price}`}
             />
           </FormControl>
           <FormControl>
@@ -134,7 +134,7 @@ export default function CreateScreen({ navigation }) {
               placeholder="stok"
               keyboardType="number-pad"
               onChangeText={(text) => setStock(text)}
-              value={stock}
+              value={`${stock}`}
             />
           </FormControl>
           <FormControl>
