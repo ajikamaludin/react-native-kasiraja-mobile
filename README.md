@@ -1,7 +1,7 @@
 ## kasirAjaAndroid 
 contoh react native POS mobile apps android
 
-### screenshot 
+### screenshots
 
 
 ### backend
