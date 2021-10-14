@@ -16,6 +16,9 @@ mobile apps android kasirAja - aplikasi POS sedehana dengan berbagai fitur didal
 <img align="top" src="https://github.com/ajikamaludin/react-native-kasiraja-mobile/raw/dev/screenshots/8.jpg" width="200px">
 </div>
 
+[Demo Video](https://www.youtube.com/watch?v=pBqVOmw8Ess)
+[Apk Debug v1.0.0-rc](#)
+
 ### feature
 - nodejs rest api
 - bisa lebih dari 1 toko `multi store`
