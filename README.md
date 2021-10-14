@@ -17,7 +17,7 @@ mobile apps android kasirAja - aplikasi POS sedehana dengan berbagai fitur didal
 </div>
 
 [Demo Video](https://www.youtube.com/watch?v=pBqVOmw8Ess)
-[Apk Debug v1.0.0-rc](#)
+[Apk Debug v1.0.0-rc](https://github.com/ajikamaludin/react-native-kasiraja-mobile/blob/dev/apk/kasirajaPOS-v100rc-debug.apk)
 
 ### feature
 - nodejs rest api
