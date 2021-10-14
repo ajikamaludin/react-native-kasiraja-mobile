@@ -25,7 +25,7 @@ mobile apps android kasirAja - aplikasi POS sedehana dengan berbagai fitur didal
 - bisa lebih dari 1 kasir `multi users`
 - pengelolaan produk, stok dan unit
 - pembelian
-- penjualan
+- penjualan (scan barcode)
 - diskon penjualan
 - UI design use [NativeBase](https://nativebase.io/)
 ### start 
