@@ -103,7 +103,7 @@ Entitas apapun yang Anda pilih sebagai kontak atau berinteraksi baik yang terdaf
 
 ### G. Penyimpanan dan Penghapusan
 
-kasirAja POS berhak menyimpan informasi pribadi selama Anda masih menjadi member aktif pengguna layanan kasirAja POS baik di dalam wilayah Republik Indonesia maupun di luar wilayah Republik Indonesia dan kasirAja POS juga dapat melakukan penghapusan sesuai dengan ketentuan hukum yang berlaku.
+kasirAja POS berhak menyimpan informasi pribadi selama Anda masih menjadi member aktif pengguna layanan kasirAja POS baik di dalam wilayah Republik Indonesia maupun di luar wilayah Republik Indonesia dan kasirAja POS juga dapat melakukan penghapusan sesuai dengan ketentuan hukum yang berlaku. kasirAja POS juga dapat menghentikan layanan baik aplikasi mobile maupun web sewaktu waktu tanpa pemberitahuan terlebih dahulu yang akan di beritahukan berikutnya melalui halaman github ini atau halaman informasi pada web atau aplikasi terkait
 
 ### H_. Cookies_
 
