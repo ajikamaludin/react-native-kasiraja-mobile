@@ -1,5 +1,5 @@
 ## kasirAjaAndroid 
-mobile apps android kasirAja - aplikasi POS sedehana dengan berbagai fitur didalamnya
+mobile apps android kasirAja - aplikasi POS sedehana dengan berbagai fitur didalamnya dibangun dengan react native 
 
 ### backend
 `Hapijs REST API - kasirAja`: [Link](https://github.com/ajikamaludin/hapi-kasiraja-api)
@@ -29,7 +29,7 @@ mobile apps android kasirAja - aplikasi POS sedehana dengan berbagai fitur didal
 - penjualan (scan barcode)
 - diskon penjualan
 - UI design use [NativeBase](https://nativebase.io/)
-### start 
+### development 
 - install
 
         yarn install
@@ -41,3 +41,14 @@ mobile apps android kasirAja - aplikasi POS sedehana dengan berbagai fitur didal
 - run the app
 
         npx expo start
+
+### build debug apk
+- bundle js and assets
+
+        npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
+
+- build apk with gradle 
+
+        cd android && ./gradlew assembleDebug
+
+- check file in android/app/build/outputs/apk/debug/app-debug.apk
