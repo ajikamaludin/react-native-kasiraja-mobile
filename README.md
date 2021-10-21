@@ -16,11 +16,13 @@ mobile apps android kasirAja - aplikasi POS sedehana dengan berbagai fitur didal
 <img align="top" src="https://github.com/ajikamaludin/react-native-kasiraja-mobile/raw/dev/screenshots/8.jpg" width="200px">
 </div>
 
+
+### get the app
 <a href="https://play.google.com/store/apps/details?id=com.kasirajaandroid" target="_blank">
 <img align="top" src="https://github.com/ajikamaludin/react-native-kasiraja-mobile/raw/dev/screenshots/google-play-logo2.png" width="250px" height="75px">
 </a>
 
-
+### demo
 [Demo Video](https://www.youtube.com/watch?v=pBqVOmw8Ess)
 
 ### feature
