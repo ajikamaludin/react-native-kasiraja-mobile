@@ -16,6 +16,9 @@ mobile apps android kasirAja - aplikasi POS sedehana dengan berbagai fitur didal
 <img align="top" src="https://github.com/ajikamaludin/react-native-kasiraja-mobile/raw/dev/screenshots/8.jpg" width="200px">
 </div>
 
+### Support me
+
+<a href="https://trakteer.id/ajikamaludin" target="_blank"><img id="wse-buttons-preview" src="https://cdn.trakteer.id/images/embed/trbtn-blue-2.png" height="40" style="border:0px;height:40px;" alt="Trakteer Saya"></a>
 
 ### get the app
 <a href="https://play.google.com/store/apps/details?id=com.kasirajaandroid" target="_blank">
