@@ -21,7 +21,7 @@ export default function TransactionSuccessScreen({ route, navigation }){
         <VStack flex={1}>
           <Center py="100px">
             <Circle bg="tertiary.500" size={98}>
-              <CheckIcon color="white" />
+              <CheckIcon color="white" size="10"/>
             </Circle>
           </Center>
           <Center mb={5}>

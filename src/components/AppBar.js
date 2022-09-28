@@ -38,7 +38,7 @@ export default function AppBar(props) {
             }
             onPress={() => drawer.current.openDrawer()}
           />
-          <Text color="white" fontSize={20} fontWeight="bold">
+          <Text color="white" fontSize={16} fontWeight="bold">
             {options?.title}
           </Text>
         </HStack>

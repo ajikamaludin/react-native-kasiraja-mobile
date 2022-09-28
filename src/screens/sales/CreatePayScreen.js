@@ -78,14 +78,13 @@ const TunaiComponent = () => {
   }
 
   return (
-    <HStack mt={5}>
+    <HStack mt={5} pl={1}>
       <VStack space={5}>
         <Center>
           <Button
             variant="outline"
             _pressed={{ bg: 'muted.100' }}
-            px="135px"
-            mr={2}
+            w="100%"
             onPress={onPayFull}
           >
             <HStack>

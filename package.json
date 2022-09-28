@@ -13,8 +13,10 @@
     "@react-navigation/native": "^6.0.13",
     "@react-navigation/native-stack": "^6.9.0",
     "axios": "^0.27.2",
+    "deprecated-react-native-prop-types": "^2.3.0",
     "expo": "~45.0.0",
     "expo-barcode-scanner": "~11.3.0",
+    "expo-splash-screen": "~0.15.1",
     "expo-status-bar": "~1.3.0",
     "is_js": "^0.9.0",
     "native-base": "^3.4.16",
@@ -29,8 +31,7 @@
     "react-native-svg": "12.3.0",
     "react-native-tab-view": "^3.1.1",
     "react-native-web": "0.17.7",
-    "use-debounce": "^8.0.4",
-    "expo-splash-screen": "~0.15.1"
+    "use-debounce": "^8.0.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

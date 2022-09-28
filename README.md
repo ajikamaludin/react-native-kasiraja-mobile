@@ -42,6 +42,10 @@ mobile apps android kasirAja - aplikasi POS sedehana dengan berbagai fitur didal
 
         yarn install
 
+or 
+
+        npm install --legacy-peer-deps #for expo 45 some of deps is not support for react 17 
+
 - config app.config.js file for api_url
 
         cp app.config.js.example app.config.js

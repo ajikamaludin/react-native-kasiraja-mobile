@@ -1,12 +1,19 @@
 import React, { useState } from 'react'
 import { View, Text, Button, Avatar, Box, HStack, VStack, Center, Modal } from 'native-base'
 import { TouchableWithoutFeedback } from 'react-native'
+
 import { useAuth } from '../../contexts/AppContext'
+import BluetoothModal from '../setting/BluetoothModal'
 
 export default function ProfileScreen({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false)
+  const [blueModalVisible, setBlueModalVisible] = useState(false)
   const { user, logout } = useAuth()
   const [counter, setCounter] = useState(0)
+
+  const handleBluetoothOpen = () => {
+     
+  }
 
   return (
     <View flex={1} p={2} backgroundColor="white">
@@ -42,8 +49,32 @@ export default function ProfileScreen({ navigation }) {
           </Button>
         </HStack>
       </Box>
+      <Box p="2" mb="2" rounded="5" backgroundColor="white" shadow="1">
+        <HStack justifyContent="space-between" my="2">
+          <HStack justifyItems={'center'}>
+            <VStack justifyContent={'center'} ml="2">
+              <Text color="black">
+                Bluetooth Printer
+              </Text>
+            </VStack>
+          </HStack>
+
+          <Button
+            onPress={handleBluetoothOpen}
+            variant="subtle"
+          >
+            Buka
+          </Button>
+          <Button
+            onPress={() => {}}
+            variant="subtle"
+          >
+            Buka
+          </Button>
+        </HStack>
+      </Box>
       <Center mt="5">
-        <Text fontWeight="bold">kasirAja POS version 1.0.0</Text>
+        <Text fontWeight="bold">kasirAja POS version 1.1.0</Text>
         <Button
           onPress={() => {
             setModalVisible(true)
@@ -102,6 +133,10 @@ export default function ProfileScreen({ navigation }) {
           </Modal.Footer>
         </Modal.Content>
       </Modal>
+      <BluetoothModal
+        isOpen={blueModalVisible}
+        setOpen={setBlueModalVisible}
+      />
     </View>
   )
 }

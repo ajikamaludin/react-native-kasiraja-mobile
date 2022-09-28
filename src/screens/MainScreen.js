@@ -1,5 +1,8 @@
 import React from 'react'
 
+import { Platform } from 'react-native'
+import { ViewPropTypes } from 'deprecated-react-native-prop-types';
+
 import { AppBar } from '../components'
 import LoginScreen from './auth/LoginScreen'
 import RegisterScreen from './auth/RegisterScreen'

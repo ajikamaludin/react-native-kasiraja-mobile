@@ -12,6 +12,9 @@ export default function Numpad({ amount, setAmount, total, onNext }) {
         setAmount(0)
       }
       if(opt === 'remove') {
+        if(amount <= 9) {
+          setAmount(0)
+        }
         setAmount(amount.slice(0, -1))
       }
     }

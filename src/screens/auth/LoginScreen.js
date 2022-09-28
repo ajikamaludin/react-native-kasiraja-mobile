@@ -45,12 +45,10 @@ export default function LoginScreen(props) {
         accessToken: data.accessToken,
         refreshToken: data.refreshToken,
       })
+      setSubmit(false)
     })
     .catch(errors => {
       setError(errors)
-    })
-    .finally(() => {
-      setSubmit(false)
     })
   }
 
